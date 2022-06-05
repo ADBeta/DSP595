@@ -29,51 +29,41 @@ void setup() {
 	Serial.begin(9600);
 	
 	uint8_t nums[8] = {6,9,0,0,0,4,2,0};
+	
+	//Set the refresh rate. arg is how often the WHOLE screen refreshes
+	//Dsp.setRefreshRate(120);
+	
+	
 	//Dsp.setMask(0b11100011);
 	
-	Dsp.displayIntArray(nums);
-	//Dsp.showInt(69420);
+	//Dsp.displayIntArray(nums);
+	//Dsp.displayInt(25974176);
+	
+	//Dsp.displayFloat(69.420, 10);
 	
 	//Dsp.enableMask = 0b11001100;
 
 }
 
 void loop() {
-	static uint32_t cMicros, cMillis;
-	static uint32_t refreshMicros;
+	static uint32_t cMillis;
 	static uint32_t testMillis;
 	
-	
-	cMicros = micros();
 	cMillis = millis();
 	
-	/*
-	if(cMillis - testMillis > 100) {
+	
+	if(cMillis - testMillis > 1) {
 		static uint32_t val = 0;
-		
-		static uint32_t eMicros, sMicros;
-		
-		sMicros = micros();
-		
+				
 		Dsp.displayInt(val);
-		
-		eMicros = micros();
-		
-		Serial.println(eMicros - sMicros);
-		
-		
-		
-		val += 999;
+				
+		val += 3;
 		
 		testMillis = cMillis;
 	}
-	*/
 	
-	//Display refresh
-	if(cMicros - refreshMicros > 1000) {		
-		Dsp.refresh();
-		
-		refreshMicros = cMicros;
-	}
+	
+	//Display refresh	
+	Dsp.refresh();
 	
 }

@@ -74,6 +74,10 @@ void DSP595::displayInt(uint32_t val) {
 	}
 }
 
+void DSP595::displayFloat(float val, uint8_t sigDig) {
+	
+}
+
 void DSP595::displayIntArray(uint8_t *arrPtr) {
 	//Clear the main array
 	clrArr();
@@ -105,17 +109,34 @@ void DSP595::clrArr() {
 
 
 /** Hardware Control **********************************************************/
+void DSP595::setRefreshRate(uint16_t rate) {
+	//Multiply rate by 8, because 1fps = 8 calls per sec
+	rate = rate * 8;
+	
+	//Convert call rate to us, this is a simple hz to us conversion
+	long conv = 1000000 / rate;
+	refreshMicros = conv;
+}
+
 void DSP595::refresh() { //72 Micros! very good
-	static uint8_t digit = 0;
-	
-	//Mask is 1 shifted by current index, AND'd with a mask to allow blanking
-	uint8_t mask = (0x01 << digit) & enableMask;
-	
-	//Mask is inverted, data is the current index in the main array
-	writeDat(~mask, dspArr[digit]);
-	
-	++digit; //Incriment digit position
-	if(digit == 8) digit = 0; //Reset if it overflows
+	//Timing stuff
+	static uint32_t refreshLast;
+	this->cMicros = micros();
+		
+	if(this->cMicros - refreshLast > refreshMicros) {
+		static uint8_t digit = 0;
+		//Current mask bit check. If enableMask @ bit is 0, 0 is output
+		uint8_t mask = (0x01 << digit) & enableMask;
+		
+		//Mask is inverted, data is the current index in the main array
+		writeDat(~mask, dspArr[digit]);
+		
+		++digit; //Incriment digit position
+		if(digit == 8) digit = 0; //Reset if it overflows	
+			
+		//Reset timing	
+		refreshLast = this->cMicros;
+	}
 }
 
 void DSP595::writeDat(uint8_t mask, uint8_t data) {
