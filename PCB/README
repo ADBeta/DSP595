@@ -1,0 +1,25 @@
+These files are part of DSP595.
+DSP595 is free software: you can redistribute it and/or modify it under the 
+terms of the GNU General Public License as published by the 
+Free Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+DSP595 is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License 
+for more details.
+
+You should have received a copy of the 
+GNU General Public License along with DSP595 
+
+********************************************************************************
+
+These files are the KiCad files for the DSP595 (74xx595 Display Driver) module.
+These files may be edited to add mount holes, more text etc, PLEASE I request
+that you do not remove or modify my Logo 'ADBeta' from the front silk.
+
+The displays used are E10301 common cathode 7 segment displays. Easily sourced
+from eBay.
+
+No gerber files have been added due to liabilty and guarantee that they work 
+with any specific PCB fabrication house. Please generate your own.
